@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
         if len(commands) == 0:
             print("** class name missing **")
         elif commands[0] not in self.valid_classes:
-            print("** class doesn't exist**")
+            print("** class doesn't exist **")
         else:
             new_ins = BaseModel()
             new_ins.save()
