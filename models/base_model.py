@@ -13,6 +13,11 @@ class BaseModel:
     """This is the superclass other classes will inherit from"""
     def __init__(self, *args, **kwargs):
         timef = "%Y-%m-%dT%H:%M:%S.%f"
+
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.utcnow()
+        self.updated_at = datetime.utcnow()
+
         if kwargs:
             "if there is a keyword present"
             for key, value in kwargs.items():
@@ -22,11 +27,8 @@ class BaseModel:
                     setattr(self, key, datetime.strptime(value, timef))
                 else:
                     setattr(self, key, value)
-        else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
-            models.storage.new(self)
+
+        models.storage.new(self)
 
     def __str__(self):
         """returns the string representation of an instance"""
@@ -35,7 +37,7 @@ class BaseModel:
 
     def save(self):
         """saves to current datetime"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
         models.storage.save()
 
     def to_dict(self):

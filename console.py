@@ -5,6 +5,7 @@ This is a command line interpreter
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
 import shlex
 import sys
 
@@ -13,7 +14,7 @@ class HBNBCommand(cmd.Cmd):
     """Command interpreter for the HBNB application."""
 
     prompt = "(hbnb) "
-    valid_classes = ["BaseModel"]
+    valid_classes = ["BaseModel", "User"]
 
     def do_quit(self, arg):
         """Exiting the program"""
@@ -41,8 +42,8 @@ class HBNBCommand(cmd.Cmd):
         elif commands[0] not in self.valid_classes:
             print("** class doesn't exist **")
         else:
-            new_ins = BaseModel()
-            new_ins.save()
+            new_ins = eval(f"{commands[0]}()")
+            storage.save()
             print(new_ins.id)
 
     def do_show(self, arg):
