@@ -10,10 +10,21 @@ from datetime import datetime
 
 class BaseModel:
     """This is the superclass other classes will inherit from"""
-    def __init__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+    def __init__(self, *args, **kwargs):
+        timef = "%Y-%m-%dT%H:%M:%S.%f"
+        if kwargs:
+            "if there is a keyword present"
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                elif key == "created_at" or key == "updated_at":
+                    setattr(self, key, datetime.strptime(value, timef))
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """returns the string representation of an instance"""
