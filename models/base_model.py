@@ -8,6 +8,7 @@ import uuid
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """This is the superclass other classes will inherit from"""
     def __init__(self, *args, **kwargs):
