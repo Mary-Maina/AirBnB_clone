@@ -11,7 +11,7 @@ import models
 
 class TestUser(unittest.TestCase):
     """Tests the user"""
-    def setup(self):
+    def setUp(self):
         """create a temporary fole for saving data"""
         self.test_file = "test_file.json"
         models.storage.__file_path = self.test_file
