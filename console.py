@@ -122,6 +122,7 @@ class HBNBCommand(cmd.Cmd):
             return False
 
         inc_method = command[0]
+        extra_arg = command[1].split(')')[0]
         m_dict = {
                 'all': self.do_all,
                 'show': self.do_show,
@@ -131,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
                 }
 
         if inc_method in m_dict.keys():
-            return m_dict[inc_method]("{} {}".format(inc_cls, ""))
+            return m_dict[inc_method]("{} {}".format(inc_cls, extra_arg))
 
         print("*** Unknown Syntax: {}".format(arg))
         return False
