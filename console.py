@@ -16,13 +16,12 @@ import shlex
 import sys
 
 
-
 class HBNBCommand(cmd.Cmd):
     """Command interpreter for the HBNB application."""
 
     prompt = "(hbnb) "
-    valid_classes = ["BaseModel", "User", "State",
-            "City", "Amenity", "Place", "Review"]
+    valid_classes = [
+            "BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def do_quit(self, arg):
         """Exiting the program"""
@@ -108,6 +107,33 @@ class HBNBCommand(cmd.Cmd):
             for key, value in obj.items():
                 if key.split('.')[0] == commands[0]:
                     print(str(value))
+
+    def default(self, arg):
+        """Default behavior for cmd syntax"""
+        arg_list = arg.split('.')
+        if len(arg_list) != 2:
+            print("*** Unknown syntax: {}".format(arg))
+            return False
+
+        inc_cls = arg_list[0]
+        command = arg_list[1].split('(')
+        if len(command) != 2:
+            print("*** Unknown syntax: {}".format(arg))
+            return False
+
+        inc_method = command[0]
+        m_dict = {
+                'all': self.do_all,
+                'show': self.do_show,
+                'update': self.do_update,
+                'destroy': self.do_destroy,
+                }
+
+        if inc_method in m_dict.keys():
+            return m_dict[inc_method]("{} {}".format(inc_cls, ""))
+
+        print("*** Unknown Syntax: {}".format(arg))
+        return False
 
     def do_update(self, arg):
         """updates an instance"""
