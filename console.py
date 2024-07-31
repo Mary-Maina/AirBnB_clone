@@ -127,6 +127,7 @@ class HBNBCommand(cmd.Cmd):
                 'show': self.do_show,
                 'update': self.do_update,
                 'destroy': self.do_destroy,
+                'count': self.do_count,
                 }
 
         if inc_method in m_dict.keys():
@@ -134,6 +135,28 @@ class HBNBCommand(cmd.Cmd):
 
         print("*** Unknown Syntax: {}".format(arg))
         return False
+
+    def do_count(self, arg):
+        """counts the number of instances"""
+        objects = storage.all()
+
+        commands = shlex.split(arg)
+
+        if arg:
+            inc_cls = commands[0]
+
+        count = 0
+
+        if commands:
+            if inc_cls in self.valid_classes:
+                for obj in objects.values():
+                    if obj.__class__.__name__ == inc_cls:
+                        count += 1
+                print(count)
+            else:
+                print("** class doesn't exist **")
+        else:
+            print("** class doesn't exist **")
 
     def do_update(self, arg):
         """updates an instance"""
