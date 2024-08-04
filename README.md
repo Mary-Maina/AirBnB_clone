@@ -1,1 +1,1 @@
-This is the first stage of cloning the AirBnB app. It will primarily focus on CMD modules and CRUD
+Learning the cmd of the Airbn Website to clone it in my project
